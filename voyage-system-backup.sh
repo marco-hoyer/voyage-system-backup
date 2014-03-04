@@ -18,7 +18,7 @@ if [ ! -e "$BACKUPDEVICE" ]; then
 fi
 
 # check if the backup device is as big as local device or eben bigger
-if [[ $(blockdev --getsize64 $LOCALDEVICE) -gt $(blockdev --getsize64 $BACKUPDEVICE) ]]; then
+if [ $(blockdev --getsize64 $LOCALDEVICE) -gt $(blockdev --getsize64 $BACKUPDEVICE) ]; then
         echo "ERROR: backup device is too small"
         exit 1
 fi
