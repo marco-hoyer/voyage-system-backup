@@ -5,6 +5,7 @@ BACKUPDEVICE=${2:-/dev/sda}
 REMOUNTRW=/usr/local/sbin/remountrw
 REMOUNTRO=/usr/local/sbin/remountro
 VOYAGESYNC=/etc/init.d/voyage-sync
+BLOCKDEV=/sbin/blockdev
 
 # check if devices exist
 if [ ! -e "$LOCALDEVICE" ]; then
@@ -18,8 +19,8 @@ if [ ! -e "$BACKUPDEVICE" ]; then
 fi
 
 # check if the backup device is as big as local device or eben bigger
-if [ $(blockdev --getsize64 $LOCALDEVICE) -gt $(blockdev --getsize64 $BACKUPDEVICE) ]; then
-        echo "ERROR: backup device is too small"
+if [ $($BLOCKDEV --getsize64 $LOCALDEVICE) -gt $($BLOCKDEV --getsize64 $BACKUPDEVICE) ]; then
+        echo "ERROR: backup device is too small or missing"
         exit 1
 fi
 
